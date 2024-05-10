@@ -13,7 +13,7 @@ export const SidebarHeader: FC = () => {
                         width={120}
                         height={120}
                     />
-                    <h1 className="text-2xl text-secundary hidden sm:block md:block">
+                    <h1 className="text-2xl text-secundary hidden  md:block">
                         DuckCar
                     </h1>
                 </div>

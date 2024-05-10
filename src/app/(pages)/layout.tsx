@@ -6,11 +6,11 @@ export default function Layout({
     children: React.ReactNode;
 }>) {
     return (
-        <main className="flex w-100 h-dvh">
+        <main className="flex h-dvh text-secondary">
             <Sidebar />
-            <div className="w-full bg-primary-light">
-                {children}
+            <div className="w-full bg-primary-light p-4 md:p-12">
+                <div className="bg-primary rounded p-5">{children}</div>
             </div>
         </main>
-    )
+    );
 }

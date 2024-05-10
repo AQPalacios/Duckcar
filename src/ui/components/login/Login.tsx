@@ -43,7 +43,7 @@ export const Login: FC = () => {
                     <span className="text-base">Email</span>
                     <input
                         type="email"
-                        className="p-2 text-sm rounded border border-secondary"
+                        className="p-2 text-sm rounded border border-primary"
                         placeholder="Email"
                         name="email"
                         value={email}
@@ -55,7 +55,7 @@ export const Login: FC = () => {
                     <span className="text-base">Contraseña</span>
                     <input
                         type="password"
-                        className="p-2 text-sm rounded border border-secondary"
+                        className="p-2 text-sm rounded border border-primary"
                         placeholder="Contraseña"
                         name="password"
                         value={password}

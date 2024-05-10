@@ -9,9 +9,10 @@ const config: Config = {
     ],
     theme: {
         colors: {
-            "primary": "#002430",
-            "primary-light": "#013040",
-            "secundary": "#FDF9F6",
+            "primary": "var(--primary)",
+            "primary-light": "var(--primary-light)",
+            "secondary": "var(--secondary)",
+            "input-color":"var(--input-color)"
         },
         extend: {
             backgroundImage: {

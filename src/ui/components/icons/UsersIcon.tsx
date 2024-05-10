@@ -1,11 +1,4 @@
 import { FC } from "react";
-
-// interface IconProps {
-//     width: string;
-//     height: string;
-//     classname?: string;
-// }
-
 export const UsersIcon: FC = () => {
     return (
         <svg

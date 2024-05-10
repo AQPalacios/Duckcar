@@ -1,7 +1,9 @@
-export default function DashboardPage (){
+import { Title } from "@/ui/components/common";
+export default function DashboardPage() {
     return (
         <>
-            <h1>DashboardPage</h1>
+            <Title>Dashboard</Title>
+            
         </>
-    )
+    );
 }
