@@ -1,8 +1,11 @@
-export default function Popup({
-    children,
-}: Readonly<{ children: React.ReactNode }>) {
+interface PopupProps{
+    children: React.ReactNode,
+    className?: string
+}
+
+export default function Popup({children,className}: PopupProps) {
     return (
-        <div className="fixed top-0 left-0 w-screen h-screen bg-background-popup flex justify-center items-center">
+        <div className={`fixed top-0 left-0 w-screen h-screen bg-background-popup flex justify-center items-center ${className}`}>
             {children}
         </div>
     );

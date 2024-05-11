@@ -1,10 +1,14 @@
-import {create} from "zustand";
+import { create } from "zustand";
 
-interface UserRegistrationFromState{
-    isOpen: boolean
+interface State {
+    isUserRegistrationForm: boolean;
+    openUserRegistrationForm: () => void;
+    closeUserRegistrationForm: () => void;
 }
 
-export const useUserRegistrationFormStore =  create<UserRegistrationFromState> (() => ({
-    isOpen : false,
+export const useUserRegistrationFormStore = create<State>((set) => ({
+    isUserRegistrationForm: false,
     
-}))
+    openUserRegistrationForm: () => set({ isUserRegistrationForm: true }),
+    closeUserRegistrationForm: () => set({ isUserRegistrationForm: false }),
+}));

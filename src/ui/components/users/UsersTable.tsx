@@ -4,6 +4,7 @@ import { Button } from "../common";
 import { DeleteIcon, EditIcon } from "../icons";
 
 export const UsersTable: FC = () => {
+    
     return (
         <div className="scroll relative grid bg-primary-light rounded overflow-auto ">
             <div className="sticky top-0 grid grid-cols-12 space-x-4 bg-primary-light h-[50px]">

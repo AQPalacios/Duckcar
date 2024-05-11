@@ -1,8 +1,10 @@
 import { FC } from "react";
 import { Button, Title } from "../common";
 import { CloseIcon } from "../icons";
+import { useUserRegistrationFormStore } from "@/store";
 
 export const UserRegistrationForm: FC = () => {
+    const closeUserRegistrationForm = useUserRegistrationFormStore((state) => state.closeUserRegistrationForm)
     const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log("hola");
@@ -15,7 +17,7 @@ export const UserRegistrationForm: FC = () => {
                     <Title>
                         <div className="flex justify-between">
                             Datos Personales
-                            <Button>
+                            <Button onClick={closeUserRegistrationForm}>
                                 <CloseIcon />
                             </Button>
                         </div>

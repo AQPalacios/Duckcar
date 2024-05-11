@@ -2,8 +2,11 @@ import { FC } from "react";
 import { Button } from "../common";
 import { SearchInput } from "./SearchInput";
 import { PlusIcon } from "../icons";
+import { useUserRegistrationFormStore } from "@/store";
 
 export const ActionBar:FC = () => {
+    const openUserRegistrationForm = useUserRegistrationFormStore((state) => state.openUserRegistrationForm)
+
     return (
         <div className="flex justify-between items-center gap-3 p-1">
         <div className="flex gap-1">
@@ -17,7 +20,7 @@ export const ActionBar:FC = () => {
             </Button>
         </div>
         <SearchInput />
-        <Button>
+        <Button onClick={openUserRegistrationForm}>
             <PlusIcon />
         </Button>
     </div>
