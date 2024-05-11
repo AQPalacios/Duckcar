@@ -8,7 +8,7 @@ export const SidebarHeader: FC = () => {
             <Link href={"/dashboard"}>
                 <div className="flex flex-col justify-center items-center w-full gap-4">
                     <Image
-                        src={"/logo-sin-fondo-sin-titulo.png"}
+                        src={"/logo-sin-fondo-sin-titulo.webp"}
                         alt="DuckCar Logo"
                         width={120}
                         height={120}

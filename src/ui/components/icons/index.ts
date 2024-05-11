@@ -4,4 +4,7 @@ export { RolIcon } from "./RolIcon";
 export { CalendarIcon } from "./CalendarIcon";
 export { LogoutIcon } from "./LogoutIcon";
 export { SearchIcon } from "./SearchIcon";
-export { PlusIcon } from "./PlusIcon"
+export { PlusIcon } from "./PlusIcon";
+export { DeleteIcon } from "./DeleteIcon";
+export { EditIcon } from "./EditIcon";
+export { CloseIcon } from "./CloseIcon";

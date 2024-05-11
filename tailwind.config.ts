@@ -12,7 +12,10 @@ const config: Config = {
             "primary": "var(--primary)",
             "primary-light": "var(--primary-light)",
             "secondary": "var(--secondary)",
-            "input-color":"var(--input-color)"
+            "input-color":"var(--input-color)",
+            "background-popup": "var(--background-popup)",
+            "denied": "var(--denied)",
+            "accept": "var(--accept)",
         },
         extend: {
             backgroundImage: {
