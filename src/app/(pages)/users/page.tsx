@@ -13,7 +13,8 @@ export default function UsersPage() {
             <ActionBar />
             <hr />
             <UsersTable />
-            <Popup >
+
+            <Popup>
                 <UserRegistrationForm />
             </Popup>
         </div>
