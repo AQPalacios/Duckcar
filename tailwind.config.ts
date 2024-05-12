@@ -16,6 +16,7 @@ const config: Config = {
             "background-popup": "var(--background-popup)",
             "denied": "var(--denied)",
             "accept": "var(--accept)",
+            "white": "var(--white",
         },
         extend: {
             backgroundImage: {

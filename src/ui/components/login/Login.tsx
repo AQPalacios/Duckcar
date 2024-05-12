@@ -1,5 +1,6 @@
 "use client";
 import React, { FC, useState } from "react";
+import { Button, Title } from "../common";
 
 interface InputValues {
     email: string;
@@ -35,15 +36,15 @@ export const Login: FC = () => {
     };
 
     return (
-        <div className="flex flex-col justify-around gap-2 w-96 h-[400px] p-10 rounded border border-primary">
-            <h1 className="text-2xl text-center font-bold">Login</h1>
+        <div className="flex flex-col justify-around gap-2 w-96 h-[400px] p-10 rounded bg-primary">
+            <Title className="text-3xl text-center font-bold text-secondary">Login</Title>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="flex flex-col gap-1">
-                    <span className="text-base">Email</span>
+                    <span className="text-base text-secondary">Email</span>
                     <input
                         type="email"
-                        className="p-2 text-sm rounded border border-primary"
+                        className="p-2 text-sm rounded border border-primary bg-primary-light outline-none hover:bg-input-color text-secondary focus:bg-input-color"
                         placeholder="Email"
                         name="email"
                         value={email}
@@ -52,10 +53,10 @@ export const Login: FC = () => {
                 </div>
 
                 <div className="flex flex-col gap-1">
-                    <span className="text-base">Contraseña</span>
+                    <span className="text-base text-secondary">Contraseña</span>
                     <input
                         type="password"
-                        className="p-2 text-sm rounded border border-primary"
+                        className="p-2 text-sm rounded border border-primary bg-primary-light outline-none hover:bg-input-color text-secondary focus:bg-input-color"
                         placeholder="Contraseña"
                         name="password"
                         value={password}
@@ -63,13 +64,12 @@ export const Login: FC = () => {
                     />
                 </div>
 
-                <button
+                <Button
                     type="submit"
-                    className="btn"
-
+                    className="text-secondary"
                 >
                     Entrar
-                </button>
+                </Button>
             </form>
         </div>
     );

@@ -1,1 +1,1 @@
-export { useUserRegistrationFormStore } from "./UserRegistrationFormStore";
+export { useUserRegistrationFormStore } from "./users/UserRegistrationFormStore";
