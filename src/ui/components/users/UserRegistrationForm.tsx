@@ -4,11 +4,13 @@ import { CloseIcon } from "../icons";
 import { useUserRegistrationFormStore } from "@/store";
 
 export const UserRegistrationForm: FC = () => {
-    const closeUserRegistrationForm = useUserRegistrationFormStore((state) => state.closeUserRegistrationForm)
-    const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
+    const closeUserRegistrationForm = useUserRegistrationFormStore(
+        (state) => state.closeUserRegistrationForm
+    );
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log("hola");
-    }
+    };
 
     return (
         <form onSubmit={handleSubmit}>
@@ -76,6 +78,17 @@ export const UserRegistrationForm: FC = () => {
                         />
                     </div>
 
+                    <div className="flex flex-col gap-1">
+                        <span>
+                            Contraseña <span className="text-denied">*</span>
+                        </span>
+                        <input
+                            type="passoword"
+                            className="bg-primary text-white outline-none p-2 rounded focus:bg-input-color hover:bg-input-color"
+                            required
+                        />
+                    </div>
+
                     <div>
                         <div>
                             Rol <span className="text-denied">*</span>
@@ -113,7 +126,10 @@ export const UserRegistrationForm: FC = () => {
                         </div>
                     </div>
 
-                    <button type="submit" className="p-2 bg-primary hover:bg-input-color rounded">
+                    <button
+                        type="submit"
+                        className="p-2 bg-primary hover:bg-input-color rounded"
+                    >
                         Registrar
                     </button>
                 </div>
