@@ -95,7 +95,7 @@ export const createSedeAutoescuela = ({
             },
         ];
         localStorage.setItem(
-            "autoescuelas",
+            "sede_autoescuelas",
             JSON.stringify(newSedeAutoescuelas)
         );
         return;
