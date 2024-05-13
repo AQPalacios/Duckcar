@@ -22,7 +22,7 @@ const createUniqueIdAutoescuela = (): string => {
 };
 
 const isAutoescuelasExist = (): string | null => {
-    const isExist = localStorage.getItem("autoescuelas");
+    const isExist = localStorage.getItem("autoescuela");
     if (isExist) return isExist;
     return null;
 };
@@ -30,7 +30,7 @@ const isAutoescuelasExist = (): string | null => {
 export const initAutoescuelas = (): void => {
     if (isAutoescuelasExist()) return;
     localStorage.setItem(
-        "autoescuelas",
+        "autoescuela",
         JSON.stringify([
             {
                 autoescuela_id: createUniqueIdAutoescuela(),
@@ -55,7 +55,7 @@ export const createAutoescuela = (autoescuelaNombre: string) => {
                 autoescuela_nombre: autoescuelaNombre,
             },
         ];
-        localStorage.setItem("autoescuelas", JSON.stringify(newAutoescuela));
+        localStorage.setItem("autoescuela", JSON.stringify(newAutoescuela));
         return;
     }
 

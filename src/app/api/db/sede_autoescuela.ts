@@ -30,14 +30,14 @@ const isSedeAutoescuelasExist = (): string | null => {
 };
 
 export const initSedeAutoescuelas = (): void => {
-    const autoescuelas = getAutoescuelas();
+    const autoescuela = getAutoescuelas();
     if (isSedeAutoescuelasExist()) return;
     localStorage.setItem(
-        "sede_autoescuelas",
+        "sede_autoescuela",
         JSON.stringify([
             {
                 sede_autoescuela_id: createUniqueIdSedeAutoescuela(),
-                autoescuela_id: autoescuelas[0].autoescuela_id,
+                autoescuela_id: autoescuela[0].autoescuela_id,
                 sede_autoescuela_nombre: "AUTOESCUELA LOS PEORES",
                 sede_autoescuela_direccion: "CALLE DOCTOR MORAGÁS, 3, - 1ºD",
                 sede_autoescuela_codigo_postal: "15006",
@@ -49,7 +49,7 @@ export const initSedeAutoescuelas = (): void => {
             },
             {
                 sede_autoescuela_id: createUniqueIdSedeAutoescuela(),
-                autoescuela_id: autoescuelas[1].autoescuela_id,
+                autoescuela_id: autoescuela[1].autoescuela_id,
                 sede_autoescuela_nombre: "AUTOESCUELA LOS MEJORES",
                 sede_autoescuela_direccion: "AV. VILACHÁN, 13 BAJO",
                 sede_autoescuela_codigo_postal: "15830",
@@ -95,7 +95,7 @@ export const createSedeAutoescuela = ({
             },
         ];
         localStorage.setItem(
-            "sede_autoescuelas",
+            "sede_autoescuela",
             JSON.stringify(newSedeAutoescuelas)
         );
         return;
