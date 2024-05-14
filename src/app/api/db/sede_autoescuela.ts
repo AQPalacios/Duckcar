@@ -13,13 +13,13 @@ interface SedeAutoescuela {
     sede_autoescuela_email?: string;
 }
 
-const createUniqueIdSedeAutoescuela = (): string => {
+const createUniqueIdSedeAutoescuela = (numero:Number = 0): string => {
     const randomId = Math.random().toString(36).slice(2, 11);
     // Obtener una marca de tiempo única
-    const timestamp = Date.now();
+    const timestamp = Date.now().toString(36);
     // Combinar el número aleatorio y la marca de tiempo para crear un ID único
-    const uniqueId = "sede_autoescuela_" + randomId + "_" + timestamp;
-    // Devolver el ID único generado
+    const uniqueId = "sede_autoescuela_" + randomId + timestamp + numero;
+    // Devolver el ID único generad
     return uniqueId;
 };
 
@@ -36,7 +36,7 @@ export const initSedeAutoescuelas = (): void => {
         "sede_autoescuela",
         JSON.stringify([
             {
-                sede_autoescuela_id: createUniqueIdSedeAutoescuela(),
+                sede_autoescuela_id: createUniqueIdSedeAutoescuela(3),
                 autoescuela_id: autoescuela[0].autoescuela_id,
                 sede_autoescuela_nombre: "AUTOESCUELA LOS PEORES",
                 sede_autoescuela_direccion: "CALLE DOCTOR MORAGÁS, 3, - 1ºD",
@@ -48,7 +48,7 @@ export const initSedeAutoescuelas = (): void => {
                 sede_autoescuela_email: "autoescuelamarte@autoescuelamarte.com",
             },
             {
-                sede_autoescuela_id: createUniqueIdSedeAutoescuela(),
+                sede_autoescuela_id: createUniqueIdSedeAutoescuela(4),
                 autoescuela_id: autoescuela[1].autoescuela_id,
                 sede_autoescuela_nombre: "AUTOESCUELA LOS MEJORES",
                 sede_autoescuela_direccion: "AV. VILACHÁN, 13 BAJO",
@@ -102,6 +102,15 @@ export const createSedeAutoescuela = ({
     }
 
     console.log(
-        "La sede autoescuela no se puedo crear porque no existe la base de datos de autoescuela"
+        "La sede autoescuela no se puedo crear porque no existe la base de datos de sede_autoescuela"
     );
 };
+
+export const getSedeAutoescuelas = () => {
+    const storedSedeAutoescuela = isSedeAutoescuelasExist();
+    if(storedSedeAutoescuela){
+        return JSON.parse(storedSedeAutoescuela);
+    }
+    console.log("Error al obtener las sedes");
+}
+

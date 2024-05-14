@@ -1,22 +1,14 @@
-// import {sql, db} from "@vercel/postgres";
-// import { NextResponse } from "next/server";
-
-// export async function GET(request: Request){
-//     const response = await sql`SELECT * FROM autoescuela`;
-//     return NextResponse.json({response});
-// }
-
 interface Autoescuela {
     autoescuela_id: string;
     autoescuela_nombre: string;
 }
 
-const createUniqueIdAutoescuela = (): string => {
+const createUniqueIdAutoescuela = (numero:Number = 0): string => {
     const randomId = Math.random().toString(36).slice(2, 11);
     // Obtener una marca de tiempo única
-    const timestamp = Date.now();
+    const timestamp = Date.now().toString(36);
     // Combinar el número aleatorio y la marca de tiempo para crear un ID único
-    const uniqueId ="autoescuela_" + randomId + "_" + timestamp;
+    const uniqueId ="autoescuela_" + randomId + timestamp + numero;
     // Devolver el ID único generado
     return uniqueId;
 };
@@ -33,11 +25,11 @@ export const initAutoescuelas = (): void => {
         "autoescuela",
         JSON.stringify([
             {
-                autoescuela_id: createUniqueIdAutoescuela(),
+                autoescuela_id: createUniqueIdAutoescuela(1),
                 autoescuela_nombre: "AUTOESCUELA LOS PEORES S.L",
             },
             {
-                autoescuela_id: createUniqueIdAutoescuela(),
+                autoescuela_id: createUniqueIdAutoescuela(2),
                 autoescuela_nombre: "AUTOESCUELA LOS MEJORES S.L",
             },
         ])

@@ -1,6 +1,7 @@
 "use client";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Button, Title } from "../common";
+import { initAutoescuelas, initRol, initSedeAutoescuelas } from "@/app/api/db";
 
 interface InputValues {
     email: string;
@@ -12,6 +13,12 @@ export const Login: FC = () => {
         email: "",
         password: "",
     });
+
+    useEffect(() => {
+        initAutoescuelas();
+        initSedeAutoescuelas();
+        initRol();
+    }, []);
 
     const { email, password } = inputValues;
 
@@ -37,7 +44,9 @@ export const Login: FC = () => {
 
     return (
         <div className="flex flex-col justify-around gap-2 w-96 h-[400px] p-10 rounded bg-primary">
-            <Title className="text-3xl text-center font-bold text-secondary">Login</Title>
+            <Title className="text-3xl text-center font-bold text-secondary">
+                Login
+            </Title>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="flex flex-col gap-1">
@@ -64,10 +73,7 @@ export const Login: FC = () => {
                     />
                 </div>
 
-                <Button
-                    type="submit"
-                    className="text-secondary"
-                >
+                <Button type="submit" className="text-secondary">
                     Entrar
                 </Button>
             </form>
