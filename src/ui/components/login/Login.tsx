@@ -2,6 +2,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { Button, Title } from "../common";
 import { initAutoescuelas, initRol, initSedeAutoescuelas } from "@/app/api/db";
+import { getAutoescuelas } from "@/app/api/autoescuela/route";
 
 interface InputValues {
     email: string;
@@ -15,9 +16,10 @@ export const Login: FC = () => {
     });
 
     useEffect(() => {
-        initAutoescuelas();
-        initSedeAutoescuelas();
-        initRol();
+        // initAutoescuelas();
+        // initSedeAutoescuelas();
+        // initRol();
+        getAutoescuelas()
     }, []);
 
     const { email, password } = inputValues;
