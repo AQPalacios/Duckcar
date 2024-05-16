@@ -19,7 +19,8 @@ export const Login: FC = () => {
         // initAutoescuelas();
         // initSedeAutoescuelas();
         // initRol();
-        GET();
+        const autoescuelas = GET();
+        console.log(autoescuelas);
     }, []);
 
     const { email, password } = inputValues;
