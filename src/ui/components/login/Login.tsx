@@ -2,7 +2,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { Button, Title } from "../common";
 import { initAutoescuelas, initRol, initSedeAutoescuelas } from "@/app/api/db";
-import { GET } from "@/lib/db";
+import { GET } from "@/app/api/autoescuela/route";
 
 interface InputValues {
     email: string;
@@ -19,7 +19,7 @@ export const Login: FC = () => {
         // initAutoescuelas();
         // initSedeAutoescuelas();
         // initRol();
-        GET()
+        GET();
     }, []);
 
     const { email, password } = inputValues;
