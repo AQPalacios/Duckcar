@@ -62,4 +62,5 @@ export const getAutoescuelas = () => {
         return JSON.parse(storedAutoescuela);
     }
     console.log("Error al obtener las autoescuelas");
+    return null;
 }

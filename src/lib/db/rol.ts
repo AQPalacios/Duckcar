@@ -71,7 +71,7 @@ export const createRol = (rolNombre: string, rolPermisos: Object) => {
     );
 };
 
-export const getRol = () => {
+export const getRoles = () => {
     const storedRol = isRolExist();
     if(storedRol){
         return JSON.parse(storedRol);

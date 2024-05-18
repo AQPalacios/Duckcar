@@ -5,6 +5,8 @@ export default function Layout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+
+    // Aca verificar 
     return (
         <main className="flex h-dvh text-secondary">
             <Sidebar />

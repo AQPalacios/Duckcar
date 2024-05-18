@@ -1,8 +1,14 @@
 "use client";
 import React, { FC, useEffect, useState } from "react";
 import { Button, Title } from "../common";
-import { initAutoescuelas, initRol, initSedeAutoescuelas } from "@/app/api/db";
-// import { GET } from "@/app/api/autoescuela/route";
+import {
+    getUsuariobyEmailAndPassword,
+    initAutoescuelas,
+    initRol,
+    initSedeAutoescuelas,
+    initUsuario,
+} from "@/lib/db";
+import { useUserConnected } from "@/store/login/Login";
 
 interface InputValues {
     email: string;
@@ -15,30 +21,19 @@ export const Login: FC = () => {
         password: "",
     });
 
-    // 
-    // const [data, setData] = useState([]);
-
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch(
-                    `${process.env.POSTGRES_URL}/api/autoescuela`
-                );
-                const result = await response.json();
-                console.log(result);
-                // setData(result);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        }
-        fetchData();
+        initAutoescuelas();
+        initRol();
+        initSedeAutoescuelas();
+        initUsuario();
     }, []);
+
+    const doLogin = useUserConnected((state) => state.setUserConnected);
 
     const { email, password } = inputValues;
 
     const handleChange = (event: any) => {
         const { name, value } = event.target;
-
         const newInputValues = {
             ...inputValues,
             [name]: value,
@@ -53,7 +48,12 @@ export const Login: FC = () => {
         if (password.length <= 4) return;
         console.log("Hacer Login");
         console.log(inputValues);
-        // TODO severAction que haga el login
+        
+        const user = getUsuariobyEmailAndPassword(inputValues);
+        if(user !== undefined){
+            doLogin(user);
+        }
+        
     };
 
     return (

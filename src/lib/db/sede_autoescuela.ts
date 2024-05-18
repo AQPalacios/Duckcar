@@ -1,7 +1,7 @@
 import { getAutoescuelas } from "./autoescuela";
 
 interface SedeAutoescuela {
-    sede_autoescuela_id?: string;
+    sede_autoescuela_id: string;
     autoescuela_id: string;
     sede_autoescuela_nombre: string;
     sede_autoescuela_direccion: string;
@@ -32,6 +32,7 @@ const isSedeAutoescuelasExist = (): string | null => {
 export const initSedeAutoescuelas = (): void => {
     const autoescuela = getAutoescuelas();
     if (isSedeAutoescuelasExist()) return;
+    
     localStorage.setItem(
         "sede_autoescuela",
         JSON.stringify([
@@ -100,7 +101,6 @@ export const createSedeAutoescuela = ({
         );
         return;
     }
-
     console.log(
         "La sede autoescuela no se puedo crear porque no existe la base de datos de sede_autoescuela"
     );
@@ -112,5 +112,6 @@ export const getSedeAutoescuelas = () => {
         return JSON.parse(storedSedeAutoescuela);
     }
     console.log("Error al obtener las sedes");
+    return null;
 }
 
