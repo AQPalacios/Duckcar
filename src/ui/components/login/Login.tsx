@@ -2,7 +2,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { Button, Title } from "../common";
 import { initAutoescuelas, initRol, initSedeAutoescuelas } from "@/app/api/db";
-import { GET } from "@/app/api/autoescuela/route";
+// import { GET } from "@/app/api/autoescuela/route";
 
 interface InputValues {
     email: string;
@@ -15,12 +15,23 @@ export const Login: FC = () => {
         password: "",
     });
 
+    // 
+    // const [data, setData] = useState([]);
+
     useEffect(() => {
-        // initAutoescuelas();
-        // initSedeAutoescuelas();
-        // initRol();
-        const autoescuelas = GET();
-        console.log(autoescuelas);
+        async function fetchData() {
+            try {
+                const response = await fetch(
+                    `${process.env.POSTGRES_URL}/api/autoescuela`
+                );
+                const result = await response.json();
+                console.log(result);
+                // setData(result);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+        fetchData();
     }, []);
 
     const { email, password } = inputValues;

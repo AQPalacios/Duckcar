@@ -1,12 +1,10 @@
-import { Client } from '@vercel/postgres';
+import { Pool } from '@vercel/postgres';
 
-const client = new Client({
-  connectionString: process.env.POSTGRES_URL,
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_URL, // Asegúrate de tener la URL de la base de datos en tus variables de entorno
 });
 
-export async function connectToDatabase() {
-  if (!client.connect) {
-    await client.connect();
-  }
-  return client;
+export async function query(text: string, params?: any[]) {
+  const res = await pool.query(text, params);
+  return res;
 }
