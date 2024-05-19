@@ -14,18 +14,21 @@ interface Usuario {
 interface State {
     userConnected: Usuario | null;
     setUserConnected: (user: Usuario) => void;
+    setUserDisconnected: () => void;
 }
 
-export const useUserConnected = create<State>((set) => {
+export const useUserConnectionStore = create<State>((set) => {
     return {
         userConnected: null,
 
         setUserConnected: (user: Usuario) => {
             set({ userConnected: user });
-            sessionStorage.setItem("userConnected", JSON.stringify(user));
-            console.log("Estado global preparado");
+            console.log("Usuario guardado en el estado global");
         },
 
-
+        setUserDisconnected: () => {
+            set({userConnected: null});
+            console.log("Usuario eliminado del estado global");
+        }
     };
 });

@@ -3,12 +3,9 @@ import React, { FC, useEffect, useState } from "react";
 import { Button, Title } from "../common";
 import {
     getUsuariobyEmailAndPassword,
-    initAutoescuelas,
-    initRol,
-    initSedeAutoescuelas,
-    initUsuario,
 } from "@/lib/db";
-import { useUserConnected } from "@/store/login/Login";
+import { useUserConnectionStore } from "@/store/login/UserConnectionStore";
+import { useRouter } from "next/navigation";
 
 interface InputValues {
     email: string;
@@ -16,22 +13,14 @@ interface InputValues {
 }
 
 export const Login: FC = () => {
+    const router = useRouter();
     const [inputValues, setInputValues] = useState<InputValues>({
         email: "",
         password: "",
     });
 
-    useEffect(() => {
-        initAutoescuelas();
-        initRol();
-        initSedeAutoescuelas();
-        initUsuario();
-    }, []);
-
-    const doLogin = useUserConnected((state) => state.setUserConnected);
-
+    const { setUserConnected } = useUserConnectionStore((state) => state);
     const { email, password } = inputValues;
-
     const handleChange = (event: any) => {
         const { name, value } = event.target;
         const newInputValues = {
@@ -46,14 +35,13 @@ export const Login: FC = () => {
         const regex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
         if (!regex.test(email)) return;
         if (password.length <= 4) return;
-        console.log("Hacer Login");
-        console.log(inputValues);
-        
+        // Busca si el usuario existe
         const user = getUsuariobyEmailAndPassword(inputValues);
-        if(user !== undefined){
-            doLogin(user);
+
+        if (user !== undefined) {
+            sessionStorage.setItem("userConnected", JSON.stringify(user));
+            router.push("/dashboard");
         }
-        
     };
 
     return (
