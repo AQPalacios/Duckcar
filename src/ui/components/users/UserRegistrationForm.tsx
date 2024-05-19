@@ -1,15 +1,39 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button, Title } from "../common";
 import { CloseIcon } from "../icons";
 import { useUserRegistrationFormStore } from "@/store";
+interface Usuario {
+    usuario_id: string;
+    sede_autoescuela_id: string;
+    rol_id: string;
+    usuario_dni: string;
+    usuario_nombre: string;
+    usuario_email: string;
+    usuario_telefono?: string;
+    usuario_contrasenya: string;
+}
 
 export const UserRegistrationForm: FC = () => {
     const closeUserRegistrationForm = useUserRegistrationFormStore(
         (state) => state.closeUserRegistrationForm
     );
+
+    const [inputValues, setInputValues] = useState({
+
+    });
+
+    const handleChange = (event: any) =>{
+        const {name, value} = event.target;
+        const newInputValues = {
+            ...inputValues,
+            [name]: value,
+        };
+        setInputValues(newInputValues);
+    }
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("hola");
+        
     };
 
     return (
@@ -32,6 +56,8 @@ export const UserRegistrationForm: FC = () => {
                             type="text"
                             className="bg-primary text-white outline-none p-2 rounded focus:bg-input-color hover:bg-input-color"
                             required
+                            name="usuario_dni"
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -43,10 +69,12 @@ export const UserRegistrationForm: FC = () => {
                             type="text"
                             className="bg-primary text-white outline-none p-2 rounded focus:bg-input-color hover:bg-input-color"
                             required
+                            name="usuario_nombre"
+                            onChange={handleChange}
                         />
                     </div>
 
-                    <div className="flex flex-col gap-1">
+                    {/* <div className="flex flex-col gap-1">
                         <span>
                             Apellidos <span className="text-denied">*</span>
                         </span>
@@ -54,8 +82,10 @@ export const UserRegistrationForm: FC = () => {
                             type="text"
                             className="bg-primary text-white outline-none p-2 rounded focus:bg-input-color hover:bg-input-color"
                             required
+                            name="apellido"
+                            onChange={handleChange}
                         />
-                    </div>
+                    </div> */}
                     <div className="flex flex-col gap-1">
                         <span>
                             Teléfono <span className="text-denied">*</span>
@@ -63,7 +93,8 @@ export const UserRegistrationForm: FC = () => {
                         <input
                             type="text"
                             className="bg-primary text-white outline-none p-2 rounded focus:bg-input-color hover:bg-input-color"
-                            required
+                            name="usuario_telefono"
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -75,6 +106,8 @@ export const UserRegistrationForm: FC = () => {
                             type="email"
                             className="bg-primary text-white outline-none p-2 rounded focus:bg-input-color hover:bg-input-color"
                             required
+                            name="usuario_email"
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -86,6 +119,8 @@ export const UserRegistrationForm: FC = () => {
                             type="passoword"
                             className="bg-primary text-white outline-none p-2 rounded focus:bg-input-color hover:bg-input-color"
                             required
+                            name="usaurio_contrasenya"
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -99,8 +134,9 @@ export const UserRegistrationForm: FC = () => {
                                 <input
                                     type="radio"
                                     id="estudiante"
-                                    name="rol"
+                                    name="rol_id"
                                     value="estudiante"
+                                    onChange={handleChange}
                                 />
                                 <label htmlFor="estudiante">Estudiante</label>
                             </div>
@@ -109,8 +145,9 @@ export const UserRegistrationForm: FC = () => {
                                 <input
                                     type="radio"
                                     id="profesor"
-                                    name="rol"
+                                    name="rol_id"
                                     value="profesor"
+                                    onChange={handleChange}
                                 />
                                 <label htmlFor="profesor">Profesor</label>
                             </div>
@@ -118,8 +155,9 @@ export const UserRegistrationForm: FC = () => {
                                 <input
                                     type="radio"
                                     id="admin"
-                                    name="rol"
+                                    name="rol_id"
                                     value="admin"
+                                    onChange={handleChange}
                                 />
                                 <label htmlFor="admin">Administrador</label>
                             </div>

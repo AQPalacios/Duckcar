@@ -294,7 +294,7 @@ export const getUsuarios = () => {
     console.log("No se pudo obtener los usuarios");
 };
 
-// Obtiene los usuarios de una autoescuela
+// Obtiene los usuarios de una sede_autoescuela_id
 export const getUsuariosBySedeAutoescuelaId = (sedeAutoescuelaId: string) => {
     const storedUsuario = isUsuarioExist();
     if (storedUsuario) {

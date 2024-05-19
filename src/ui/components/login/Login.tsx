@@ -4,7 +4,6 @@ import { Button, Title } from "../common";
 import {
     getUsuariobyEmailAndPassword,
 } from "@/lib/db";
-import { useUserConnectionStore } from "@/store/login/UserConnectionStore";
 import { useRouter } from "next/navigation";
 
 interface InputValues {
@@ -19,8 +18,8 @@ export const Login: FC = () => {
         password: "",
     });
 
-    const { setUserConnected } = useUserConnectionStore((state) => state);
     const { email, password } = inputValues;
+    
     const handleChange = (event: any) => {
         const { name, value } = event.target;
         const newInputValues = {
