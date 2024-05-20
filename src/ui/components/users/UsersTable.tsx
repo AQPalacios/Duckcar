@@ -63,7 +63,7 @@ export const UsersTable: FC = () => {
                                     {user.rol_id}
                                 </div>
                                 <div className=" col-span-3 flex items-center justify-end gap-2">
-                                    <Button className="hover:bg-primary">
+                                    <Button className="hover:bg-primary" onClick={() => console.log(user.usuario_id)}>
                                         <DeleteIcon />
                                     </Button>
                                     <Button className="hover:bg-primary">

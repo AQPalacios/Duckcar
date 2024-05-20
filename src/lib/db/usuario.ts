@@ -1,6 +1,6 @@
 import { getSedeAutoescuelas } from "./sede_autoescuela";
 interface Usuario {
-    usuario_id: string;
+    usuario_id?: string;
     sede_autoescuela_id: string;
     rol_id: string;
     usuario_dni: string;
@@ -33,7 +33,6 @@ export const isUsuarioExist = (): string | null => {
 
 export const initUsuario = (): void => {
     const sedeAutoescuelas = getSedeAutoescuelas();
-    // const roles = getRoles();
     if (isUsuarioExist()) return;
 
     localStorage.setItem(
@@ -249,6 +248,26 @@ export const initUsuario = (): void => {
                 usuario_telefono: "602012345",
                 usuario_contrasenya: "01234567J",
             },
+            {
+                usuario_id: createUniqueIdUsuario(33),
+                sede_autoescuela_id: sedeAutoescuelas[0].sede_autoescuela_id,
+                rol_id: "admin",
+                usuario_dni: "74859648E",
+                usuario_nombre: "Enrique",
+                usuario_email: "enrique@admin.com",
+                usuario_telefono: "600234555",
+                usuario_contrasenya: "enrique",
+            },
+            {
+                usuario_id: createUniqueIdUsuario(34),
+                sede_autoescuela_id: sedeAutoescuelas[0].sede_autoescuela_id,
+                rol_id: "admin",
+                usuario_dni: "15693854J",
+                usuario_nombre: "Joan Melsion",
+                usuario_email: "joanMelsion@admin.com",
+                usuario_telefono: "600234333",
+                usuario_contrasenya: "joanMelsion",
+            },
         ])
     );
 };
@@ -279,6 +298,7 @@ export const createUsuario = ({
             },
         ];
         localStorage.setItem("usuario", JSON.stringify(newUsuario));
+        console.log("Usuario guardado en la base de datos");
         return;
     }
     console.log("No se pudo crear el usuario");

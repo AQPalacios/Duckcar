@@ -2,9 +2,10 @@ import { FC, useState } from "react";
 import { Button, Title } from "../common";
 import { CloseIcon } from "../icons";
 import { useUserConnectionStore, useUserRegistrationFormStore } from "@/store";
-import { createUniqueIdUsuario } from "@/lib/db";
-import { isEmailExist, isPasswordExist, isRolValid } from "@/utils/usuario";
-import { regexDNI, regexEmail, regexNombre, regexTelefono } from "@/utils/regex/regex";
+import { createUsuario, getUsuariosBySedeAutoescuelaId } from "@/lib/db";
+import { isEmailExist, isRolValid } from "@/utils/validationInputsCreateUser";
+import { regexDNI, regexNombre, regexTelefono } from "@/utils/regex/regex";
+import { useUserStore } from "@/store/users/UsersStore";
 interface Usuario {
     sede_autoescuela_id: string;
     rol_id: "admin" | "profesor" | "estudiante" | "";
@@ -21,7 +22,7 @@ export const UserRegistrationForm: FC = () => {
     );
 
     const { userConnected } = useUserConnectionStore((state) => state);
-
+    const { setUsers } = useUserStore((state) => state);
     const [inputValues, setInputValues] = useState<Usuario>({
         sede_autoescuela_id: userConnected?.sede_autoescuela_id || "",
         rol_id: "",
@@ -53,19 +54,28 @@ export const UserRegistrationForm: FC = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         // Verificar DNI
-        if(!regexDNI.test(usuario_dni)) return;
+        if (!regexDNI.test(usuario_dni)) return;
         // Verificar Nombre
-        if(!regexNombre.test(usuario_nombre)) return;
+        if (!regexNombre.test(usuario_nombre)) return;
         // Verificar Contraseña
-        if(usuario_contrasenya.length <= 4) return;
+        if (usuario_contrasenya.length <= 4) return;
         // Verificar Email
-        if(isEmailExist(usuario_email) !== undefined ) return;
+        if (isEmailExist(usuario_email) !== undefined) return;
         // Verificar Telefono
-        // if(!regexTelefono.test(usuario_telefono)) return;
+        if (usuario_telefono) {
+            if (!regexTelefono.test(usuario_telefono)) return;
+        }
         // Verficiar rol
-        if(!isRolValid(rol_id)) return;
-
-        console.log(inputValues);
+        if (!isRolValid(rol_id)) return;
+        const userSessionStorage = sessionStorage.getItem("userConnected");
+        if(userSessionStorage){
+            const user = JSON.parse(userSessionStorage);
+            createUsuario(inputValues);
+            const usuarioBySedeAutoescuelaId = getUsuariosBySedeAutoescuelaId(user.sede_autoescuela_id);
+            setUsers(usuarioBySedeAutoescuelaId);
+            // TODO Hacer popup para verificar un usuario ha sido registrado
+            // TODO limpiar los datos del formulario para crear un usuario
+        }
     };
 
     return (

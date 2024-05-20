@@ -1,5 +1,5 @@
 import { isUsuarioExist } from "../lib/db"
-import { regexEmail } from "./regex/regex";
+import { regexEmail, regexTelefono } from "./regex/regex";
 
 interface Usuario {
     usuario_id: string;
@@ -34,6 +34,13 @@ export const isEmailExist = (email: string) => {
 
 export const isRolValid = (rolName: string) => {
     if(rolName === "admin" || rolName === "profesor" || rolName === "estudiante"){
+        return true;
+    }
+    return false;
+}
+
+export const isTelefonoValid = (telefono: string): boolean => {
+    if(regexTelefono.test(telefono)){
         return true;
     }
     return false;
