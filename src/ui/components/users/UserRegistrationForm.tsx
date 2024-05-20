@@ -1,11 +1,13 @@
 import { FC, useState } from "react";
 import { Button, Title } from "../common";
 import { CloseIcon } from "../icons";
-import { useUserRegistrationFormStore } from "@/store";
+import { useUserConnectionStore, useUserRegistrationFormStore } from "@/store";
+import { createUniqueIdUsuario } from "@/lib/db";
+import { isEmailExist, isPasswordExist, isRolValid } from "@/utils/usuario";
+import { regexDNI, regexEmail, regexNombre, regexTelefono } from "@/utils/regex/regex";
 interface Usuario {
-    usuario_id: string;
     sede_autoescuela_id: string;
-    rol_id: string;
+    rol_id: "admin" | "profesor" | "estudiante" | "";
     usuario_dni: string;
     usuario_nombre: string;
     usuario_email: string;
@@ -18,22 +20,52 @@ export const UserRegistrationForm: FC = () => {
         (state) => state.closeUserRegistrationForm
     );
 
-    const [inputValues, setInputValues] = useState({
+    const { userConnected } = useUserConnectionStore((state) => state);
 
+    const [inputValues, setInputValues] = useState<Usuario>({
+        sede_autoescuela_id: userConnected?.sede_autoescuela_id || "",
+        rol_id: "",
+        usuario_dni: "",
+        usuario_nombre: "",
+        usuario_email: "",
+        usuario_telefono: "",
+        usuario_contrasenya: "",
     });
 
-    const handleChange = (event: any) =>{
-        const {name, value} = event.target;
+    const {
+        rol_id,
+        usuario_dni,
+        usuario_nombre,
+        usuario_email,
+        usuario_telefono,
+        usuario_contrasenya,
+    } = inputValues;
+
+    const handleChange = (event: any) => {
+        const { name, value } = event.target;
         const newInputValues = {
             ...inputValues,
             [name]: value,
         };
         setInputValues(newInputValues);
-    }
+    };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        
+        // Verificar DNI
+        if(!regexDNI.test(usuario_dni)) return;
+        // Verificar Nombre
+        if(!regexNombre.test(usuario_nombre)) return;
+        // Verificar Contraseña
+        if(usuario_contrasenya.length <= 4) return;
+        // Verificar Email
+        if(isEmailExist(usuario_email) !== undefined ) return;
+        // Verificar Telefono
+        // if(!regexTelefono.test(usuario_telefono)) return;
+        // Verficiar rol
+        if(!isRolValid(rol_id)) return;
+
+        console.log(inputValues);
     };
 
     return (
@@ -73,19 +105,6 @@ export const UserRegistrationForm: FC = () => {
                             onChange={handleChange}
                         />
                     </div>
-
-                    {/* <div className="flex flex-col gap-1">
-                        <span>
-                            Apellidos <span className="text-denied">*</span>
-                        </span>
-                        <input
-                            type="text"
-                            className="bg-primary text-white outline-none p-2 rounded focus:bg-input-color hover:bg-input-color"
-                            required
-                            name="apellido"
-                            onChange={handleChange}
-                        />
-                    </div> */}
                     <div className="flex flex-col gap-1">
                         <span>
                             Teléfono <span className="text-denied">*</span>
@@ -116,10 +135,10 @@ export const UserRegistrationForm: FC = () => {
                             Contraseña <span className="text-denied">*</span>
                         </span>
                         <input
-                            type="passoword"
+                            type="password"
                             className="bg-primary text-white outline-none p-2 rounded focus:bg-input-color hover:bg-input-color"
                             required
-                            name="usaurio_contrasenya"
+                            name="usuario_contrasenya"
                             onChange={handleChange}
                         />
                     </div>

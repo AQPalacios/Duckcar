@@ -1,4 +1,3 @@
-
 import { getSedeAutoescuelas } from "./sede_autoescuela";
 interface Usuario {
     usuario_id: string;
@@ -16,7 +15,7 @@ interface InputValues {
     password: string;
 }
 
-const createUniqueIdUsuario = (numero: Number = 0): string => {
+export const createUniqueIdUsuario = (numero: Number = 0): string => {
     const randomId = Math.random().toString(36).slice(2, 11);
     // Obtener una marca de tiempo única
     const timestamp = Date.now().toString(36);
@@ -26,7 +25,7 @@ const createUniqueIdUsuario = (numero: Number = 0): string => {
     return uniqueId;
 };
 
-const isUsuarioExist = (): string | null => {
+export const isUsuarioExist = (): string | null => {
     const isExist = localStorage.getItem("usuario");
     if (isExist) return isExist;
     return null;
