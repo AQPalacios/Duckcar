@@ -3,10 +3,25 @@ import { FC } from "react";
 import { Button } from "../common";
 import { DeleteIcon, EditIcon } from "../icons";
 import { useUserStore } from "@/store/users/UsersStore";
+import { deleteUsuarioById } from "@/lib/db";
 
 export const UsersTable: FC = () => {
-    const { users } = useUserStore((state) => state);
+    const { users, setUsers } = useUserStore((state) => state);
     const roleOrder = ["admin", "profesor", "estudiante"];
+
+    const handleEditInfoUser = (userId: string) => {
+        console.log(userId);
+    }
+
+    const handleDeleteUser = (userId: string) => {
+        /**
+         * 
+         */
+        // TODO Poner un popup para confirmar la eliminacion del usuario
+        const nuevosUsuarios = deleteUsuarioById(userId);
+        setUsers(nuevosUsuarios);
+    }
+    
     return (
         <div className="scroll relative grid bg-primary-light rounded overflow-auto ">
             <div className="sticky top-0 grid grid-cols-12 space-x-4 bg-primary-light h-[50px]">
@@ -63,10 +78,10 @@ export const UsersTable: FC = () => {
                                     {user.rol_id}
                                 </div>
                                 <div className=" col-span-3 flex items-center justify-end gap-2">
-                                    <Button className="hover:bg-primary" onClick={() => console.log(user.usuario_id)}>
+                                    <Button className="hover:bg-primary" onClick={() => handleDeleteUser(user.usuario_id)}>
                                         <DeleteIcon />
                                     </Button>
-                                    <Button className="hover:bg-primary">
+                                    <Button className="hover:bg-primary" onClick={() => handleEditInfoUser(user.usuario_id)}>
                                         <EditIcon />
                                     </Button>
                                 </div>

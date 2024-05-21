@@ -15,6 +15,7 @@ interface InputValues {
     password: string;
 }
 
+
 export const createUniqueIdUsuario = (numero: Number = 0): string => {
     const randomId = Math.random().toString(36).slice(2, 11);
     // Obtener una marca de tiempo única
@@ -345,3 +346,17 @@ export const getUsuariobyEmailAndPassword = (inputValues: InputValues) => {
     console.log("El usuario no existe");
     return undefined;
 };
+
+export const deleteUsuarioById = (usuarioId: string) => {
+    const storedUsuario = isUsuarioExist();
+    if(storedUsuario){
+        const userConnected = sessionStorage.getItem("userConnected");
+        if(userConnected){
+            const usuarioConectado = JSON.parse(userConnected);
+            const usuariosDeLaSede = getUsuariosBySedeAutoescuelaId(usuarioConectado.sede_autoescuela_id);
+            const nuevosUsuarios = usuariosDeLaSede.filter((u: Usuario) => u.usuario_id !== usuarioId);
+            localStorage.setItem("usuario", JSON.stringify(nuevosUsuarios));
+            return nuevosUsuarios;
+        }
+    }
+}

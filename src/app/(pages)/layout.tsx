@@ -36,8 +36,10 @@ export default function Layout({
         <>
             <main className="flex h-dvh text-secondary">
                 <Sidebar />
-                <div className="w-full bg-primary-light p-4 md:p-12">
-                    <div className="bg-primary rounded p-5">{children}</div>
+                <div className="w-full bg-primary-light p-4 md:p-12 relative">
+                    <div className="bg-primary rounded p-5">
+                        {children}
+                    </div>
                 </div>
             </main>
         </>
