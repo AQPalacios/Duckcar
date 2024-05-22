@@ -2,11 +2,11 @@ import { FC, useState } from "react";
 import { Button, Title } from "../common";
 import { CloseIcon } from "../icons";
 import { useUserConnectionStore, useUserRegistrationFormStore } from "@/store";
-import { createUsuario, getUsuariosBySedeAutoescuelaId } from "@/lib/db";
 import { isEmailExist, isRolValid } from "@/utils/validationInputsCreateUser";
 import { regexDNI, regexNombre, regexTelefono } from "@/utils/regex/regex";
 import { useUserStore } from "@/store/users/UsersStore";
 import clsx from "clsx";
+import { useUserEditFormStore } from "@/store/users/UserEditFormStore";
 
 interface Usuario {
     sede_autoescuela_id: string;
@@ -18,12 +18,12 @@ interface Usuario {
     usuario_contrasenya: string;
 }
 
-export const UserRegistrationForm: FC = () => {
+export const UserEditForm: FC = () => {
     const {
-        closeUserRegistrationForm,
-        statusUserRegistrationPopup,
-        setStatusUserRegistrationForm,
-    } = useUserRegistrationFormStore((state) => state);
+        isUserEditForm,
+        openUserEditForm,
+        closeUserEditForm
+    } = useUserEditFormStore((state) => state);
 
     const { userConnected } = useUserConnectionStore((state) => state);
     const { setUsers } = useUserStore((state) => state);
@@ -81,51 +81,51 @@ export const UserRegistrationForm: FC = () => {
         console.log("rol valido");
         const userSessionStorage = sessionStorage.getItem("userConnected");
         if (userSessionStorage) {
-            const user = JSON.parse(userSessionStorage);
+            // const user = JSON.parse(userSessionStorage);
             // Crea un usuario en la base de datos
-            createUsuario(inputValues);
-            const usuariosBySedeAutoescuelaId = getUsuariosBySedeAutoescuelaId(
-                user.sede_autoescuela_id
-            );
+            // createUsuario(inputValues);
+            // const usuariosBySedeAutoescuelaId = getUsuariosBySedeAutoescuelaId(
+            //     user.sede_autoescuela_id
+            // );
             // Actualiza el estado global de los usuarios
-            setUsers(usuariosBySedeAutoescuelaId);
+            // setUsers(usuariosBySedeAutoescuelaId);
 
-            setInputValues({
-                sede_autoescuela_id: userConnected?.sede_autoescuela_id || "",
-                rol_id: "",
-                usuario_dni: "",
-                usuario_nombre: "",
-                usuario_email: "",
-                usuario_telefono: "",
-                usuario_contrasenya: "",
-            });
+            // setInputValues({
+            //     sede_autoescuela_id: userConnected?.sede_autoescuela_id || "",
+            //     rol_id: "",
+            //     usuario_dni: "",
+            //     usuario_nombre: "",
+            //     usuario_email: "",
+            //     usuario_telefono: "",
+            //     usuario_contrasenya: "",
+            // });
             console.log("Limpiando formulario");
             // Mostrar mensaje de creado correctamente
-            setStatusUserRegistrationForm("accept");
+            // setStatusUserRegistrationForm("accept");
 
-            setTimeout(() => {
-                setStatusUserRegistrationForm("none");
-            }, 2000);
+            // setTimeout(() => {
+            //     setStatusUserRegistrationForm("none");
+            // }, 2000);
         }
     };
 
     return (
         <>
-            <div
+            {/* <div
                 className={clsx("fade-in-out-down text-center", {
                     "flex justify-center items-center": statusUserRegistrationPopup === "accept",
                     "hidden": statusUserRegistrationPopup === "none",
                 })}
             >
                 Usuario creado correctamente
-            </div>
+            </div> */}
             <form onSubmit={handleSubmit}>
                 <div className="w-[100vw] lg:w-[600px] p-2">
                     <div className="flex flex-col gap-5 bg-primary-light p-5 rounded h-full">
                         <Title>
                             <div className="flex justify-between">
                                 Datos Personales
-                                <Button onClick={closeUserRegistrationForm}>
+                                <Button onClick={closeUserEditForm}>
                                     <CloseIcon />
                                 </Button>
                             </div>
@@ -248,7 +248,7 @@ export const UserRegistrationForm: FC = () => {
                             type="submit"
                             className="p-2 bg-primary hover:bg-input-color rounded"
                         >
-                            Registrar
+                            Actualizar
                         </button>
                     </div>
                 </div>

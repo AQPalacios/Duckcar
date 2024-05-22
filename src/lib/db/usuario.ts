@@ -15,7 +15,6 @@ interface InputValues {
     password: string;
 }
 
-
 export const createUniqueIdUsuario = (numero: Number = 0): string => {
     const randomId = Math.random().toString(36).slice(2, 11);
     // Obtener una marca de tiempo única
@@ -314,6 +313,15 @@ export const getUsuarios = () => {
     console.log("No se pudo obtener los usuarios");
 };
 
+export const getUsuariobyId = (usuarioId: string) => {
+    const storedUsuario = isUsuarioExist();
+    if(storedUsuario){
+        const usuarios = JSON.parse(storedUsuario);
+        const usuario = usuarios.find((u: Usuario) => u.usuario_id === usuarioId);
+        return usuario;
+    }
+}
+
 // Obtiene los usuarios de una sede_autoescuela_id
 export const getUsuariosBySedeAutoescuelaId = (sedeAutoescuelaId: string) => {
     const storedUsuario = isUsuarioExist();
@@ -349,14 +357,11 @@ export const getUsuariobyEmailAndPassword = (inputValues: InputValues) => {
 
 export const deleteUsuarioById = (usuarioId: string) => {
     const storedUsuario = isUsuarioExist();
-    if(storedUsuario){
-        const userConnected = sessionStorage.getItem("userConnected");
-        if(userConnected){
-            const usuarioConectado = JSON.parse(userConnected);
-            const usuariosDeLaSede = getUsuariosBySedeAutoescuelaId(usuarioConectado.sede_autoescuela_id);
-            const nuevosUsuarios = usuariosDeLaSede.filter((u: Usuario) => u.usuario_id !== usuarioId);
-            localStorage.setItem("usuario", JSON.stringify(nuevosUsuarios));
-            return nuevosUsuarios;
-        }
+    if (storedUsuario) {
+        const usuarios = JSON.parse(storedUsuario);
+        const nuevosUsuarios = usuarios.filter(
+            (u: Usuario) => u.usuario_id !== usuarioId
+        );
+        localStorage.setItem("usuario", JSON.stringify(nuevosUsuarios));
     }
-}
+};
