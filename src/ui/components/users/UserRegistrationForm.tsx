@@ -1,3 +1,4 @@
+"use client";
 import { FC, useState } from "react";
 import { Button, Title } from "../common";
 import { CloseIcon } from "../icons";
