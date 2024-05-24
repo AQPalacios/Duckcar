@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState } from "react";
+import { FC, useEffect } from "react";
 import { SearchIcon } from "../icons";
 import { useUserStore } from "@/store/users/UsersStore";
 import { getUserConnected } from "@/utils/userConnected/userConnected";
@@ -16,27 +16,30 @@ interface Usuario {
 }
 
 export const SearchInput: FC = () => {
-    const [searchInput, setSearchInput] = useState<string>("");
-    const { users, setUsers } = useUserStore((state) => state);
-    const userConnected = getUserConnected();
-    const usersByAutoescuelaId: Usuario[] = getUsuariosBySedeAutoescuelaId(
-        userConnected.sede_autoescuela_id
-    );
+    const { setUsers } = useUserStore((state) => state);
 
     const searchData = (searchName: string) => {
+        const userConnected = getUserConnected();
+        const usersByAutoescuelaId = getUsuariosBySedeAutoescuelaId(
+            userConnected.sede_autoescuela_id
+        );
+        
         if (searchName === "") {
             setUsers(usersByAutoescuelaId);
         } else {
-            const arrayNewUsers = usersByAutoescuelaId.filter((user) =>
-                user.usuario_nombre.toLowerCase().includes(searchName.toLowerCase())
+            const arrayNewUsers = usersByAutoescuelaId.filter((user: Usuario) =>
+                user.usuario_nombre
+                    .toLowerCase()
+                    .includes(searchName.toLowerCase())
             );
-            if(arrayNewUsers.length === 0){
-
-            }else{
-                setUsers(arrayNewUsers)
+            if (arrayNewUsers.length === 0) {
+            } else {
+                setUsers(arrayNewUsers);
             }
         }
     };
+    
+    
 
     const handleChange = (event: any) => {
         event.preventDefault();
@@ -50,16 +53,17 @@ export const SearchInput: FC = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit} className="relative w-full xl:w-1/2">
+            <form 
+                onSubmit={handleSubmit} 
+                className="relative w-full xl:w-1/2"
+            >
                 <input
                     type="text"
                     placeholder="Buscar por nombre"
                     className=" bg-primary-light p-2 rounded-lg w-full outline-none hover:bg-input-color focus:bg-input-color"
                     onChange={handleChange}
                 />
-                {/* <button type="submit">
-                    <SearchIcon className="absolute top-1 right-1 bg-input-color p-1.5 rounded hover:bg-primary" />
-                </button> */}
+                <SearchIcon className="absolute top-1 right-1 bg-input-color p-1.5 rounded hover:bg-primary" />
             </form>
         </>
     );

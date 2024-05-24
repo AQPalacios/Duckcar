@@ -1,3 +1,4 @@
+"use client";
 interface PopupProps {
     children: React.ReactNode;
     className?: string;

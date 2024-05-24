@@ -4,10 +4,13 @@ import { FC, useState } from "react";
 import { Button } from "../common";
 import { DeleteIcon, EditIcon } from "../icons";
 import { useUserStore } from "@/store/users/UsersStore";
-import { deleteUsuarioById, getUsuariobyId, getUsuariosBySedeAutoescuelaId } from "@/lib/db";
+import {
+    deleteUsuarioById,
+    getUsuariobyId,
+    getUsuariosBySedeAutoescuelaId,
+} from "@/lib/db";
 import { getUserConnected } from "@/utils/userConnected/userConnected";
 import Popup from "../common/Popup";
-import { useUserRegistrationFormStore } from "@/store";
 import { useUserEditFormStore } from "@/store/users/UserEditFormStore";
 
 export const UsersTable: FC = () => {
@@ -15,18 +18,10 @@ export const UsersTable: FC = () => {
 
     const [openModalVerifyDeleteUser, setOpenModalVerifyDeleteUser] =
         useState<boolean>(false);
-        
-    const { 
-        isUserRegistrationForm, 
-        openUserRegistrationForm 
-    } = useUserRegistrationFormStore((state) => state);
 
-    const { 
-        isUserEditForm,
-        openUserEditForm,
-        closeUserEditForm ,
-        setContentUserEditForm
-    } = useUserEditFormStore((state) => state);
+    const { openUserEditForm, setContentUserEditForm } = useUserEditFormStore(
+        (state) => state
+    );
 
     const [userId, setUserId] = useState<string>("");
 
@@ -34,7 +29,7 @@ export const UsersTable: FC = () => {
 
     const handleEditInfoUser = (userId: string) => {
         const user = getUsuariobyId(userId);
-        setContentUserEditForm(user)
+        setContentUserEditForm(user);
         openUserEditForm();
     };
 
