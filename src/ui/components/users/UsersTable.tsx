@@ -21,9 +21,10 @@ export const UsersTable: FC = () => {
     } = useUserRegistrationFormStore((state) => state);
 
     const { 
-        openUserEditForm,
         isUserEditForm,
-        closeUserEditForm 
+        openUserEditForm,
+        closeUserEditForm ,
+        setContentUserEditForm
     } = useUserEditFormStore((state) => state);
 
     const [userId, setUserId] = useState<string>("");
@@ -31,10 +32,9 @@ export const UsersTable: FC = () => {
     const roleOrder = ["admin", "profesor", "estudiante"];
 
     const handleEditInfoUser = (userId: string) => {
-        openUserEditForm();
         const user = getUsuariobyId(userId);
-        console.log(user);
-        console.log(userId);
+        setContentUserEditForm(user)
+        openUserEditForm();
     };
 
     const handleOpenModalVerifyDeleteUser = (userId: string) => {

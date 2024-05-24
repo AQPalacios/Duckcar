@@ -1,5 +1,6 @@
 import { create } from "zustand";
 interface Usuario {
+    usuario_id: string;
     sede_autoescuela_id: string;
     rol_id: "admin" | "profesor" | "estudiante" | "";
     usuario_dni: string;
@@ -12,22 +13,27 @@ interface Usuario {
 interface State {
     // Para abrir el formulario
     isUserEditForm: boolean;
-    // Mostrar mensaje de usuario creado correctamente(No tiene que estar aqui, crear un nuevo storage)
-    // statusUserEditPopup: "none" | "pending"  | "accept";
+    // Contenido del formulario
+    contentUserEditForm: Usuario | null;
+    statusUserEditPopup: "none" | "pending"  | "accept";
+
+    // setear el formulario de edicion
+    setContentUserEditForm: (user: Usuario) => void;
     // Contenido cuando presiones el boton de editar usuario se rellene
     // contentUserEditForm: Usuario | null,
     // setContentUserEditForm: (contentUser: Usuario) => void; 
     openUserEditForm: () => void;
     closeUserEditForm: () => void;
-    // setStatusUserEditForm: (newStatus: "none" | "pending"  | "accept") => void;
+    setStatusUserEditFormPopup: (newStatus: "none" | "pending"  | "accept") => void;
 }
 
 export const useUserEditFormStore = create<State>((set) => ({
     isUserEditForm: false,
-    // statusUserEditPopup: "none",
-    // contentUserEditForm: null,
-    // setContentUserEditForm: (contentUser: Usuario) => set({contentUserEditForm: contentUser}),
+    contentUserEditForm: null,
+    statusUserEditPopup: "none",
+    setContentUserEditForm: (user: Usuario) => set({contentUserEditForm: user}),
     openUserEditForm: () => set({ isUserEditForm: true }),
     closeUserEditForm: () => set({ isUserEditForm: false }),
-    // setStatusUserEditForm: (newStatus) => set({statusUserEditPopup: newStatus}) 
+    setStatusUserEditFormPopup: (newStatus) => set({statusUserEditPopup: newStatus}) 
+
 }));

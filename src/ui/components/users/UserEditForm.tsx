@@ -1,14 +1,18 @@
 import { FC, useState } from "react";
 import { Button, Title } from "../common";
 import { CloseIcon } from "../icons";
-import { useUserConnectionStore, useUserRegistrationFormStore } from "@/store";
-import { isEmailExist, isRolValid } from "@/utils/validationInputsCreateUser";
-import { regexDNI, regexNombre, regexTelefono } from "@/utils/regex/regex";
+import { isEmailExist, isRolValid, validateDni } from "@/utils/validationInputsEditUser";
+import { regexNombre, regexTelefono } from "@/utils/regex/regex";
 import { useUserStore } from "@/store/users/UsersStore";
-import clsx from "clsx";
+
 import { useUserEditFormStore } from "@/store/users/UserEditFormStore";
+import { useUserConnectionStore } from "@/store";
+import { editUsuario, getUsuariosBySedeAutoescuelaId } from "@/lib/db";
+import { getUserConnected } from "@/utils/userConnected/userConnected";
+import clsx from "clsx";
 
 interface Usuario {
+    usuario_id?: string;
     sede_autoescuela_id: string;
     rol_id: "admin" | "profesor" | "estudiante" | "";
     usuario_dni: string;
@@ -19,15 +23,20 @@ interface Usuario {
 }
 
 export const UserEditForm: FC = () => {
+    const {setUsers} = useUserStore((state) => state)
     const {
         isUserEditForm,
+        contentUserEditForm,
+        statusUserEditPopup,
         openUserEditForm,
-        closeUserEditForm
+        closeUserEditForm,
+        setStatusUserEditFormPopup
     } = useUserEditFormStore((state) => state);
 
     const { userConnected } = useUserConnectionStore((state) => state);
-    const { setUsers } = useUserStore((state) => state);
-    const initialState: Usuario = {
+
+    const initValues: Usuario = contentUserEditForm || { 
+        usuario_id: "",
         sede_autoescuela_id: userConnected?.sede_autoescuela_id || "",
         rol_id: "",
         usuario_dni: "",
@@ -36,8 +45,8 @@ export const UserEditForm: FC = () => {
         usuario_telefono: "",
         usuario_contrasenya: "",
     };
-    
-    const [inputValues, setInputValues] = useState<Usuario>(initialState);
+
+    const [inputValues, setInputValues] = useState<Usuario>(initValues);
 
     const handleChange = (event: any) => {
         const { name, value } = event.target;
@@ -49,6 +58,7 @@ export const UserEditForm: FC = () => {
     };
 
     const {
+        usuario_id,
         rol_id,
         usuario_dni,
         usuario_nombre,
@@ -59,66 +69,49 @@ export const UserEditForm: FC = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // Verificar DNI
-        if (!regexDNI.test(usuario_dni)) return;
+
+        if(validateDni(usuario_dni, usuario_id) !== undefined) return;
         console.log("Dni valido");
-        // Verificar Nombre
+        
         if (!regexNombre.test(usuario_nombre)) return;
         console.log("Nombre valido");
-        // Verificar Contraseña
-        if (usuario_contrasenya.length <= 4) return;
-        console.log("contraseña valida");
-        // Verificar Email
-        if (isEmailExist(usuario_email) !== undefined) return;
-        console.log("email valido");
-        // Verificar Telefono
+        
         if (usuario_telefono) {
             if (!regexTelefono.test(usuario_telefono)) return;
         }
-        console.log("Telefono valido");
-        // Verficiar rol
+        console.log("telefono valido");
+
+        if (isEmailExist(usuario_email, usuario_id) !== undefined) return;
+        console.log("email valido");
+
+        if (usuario_contrasenya.length <= 4) return;
+        console.log("contraseña valida");
+
         if (!isRolValid(rol_id)) return;
         console.log("rol valido");
-        const userSessionStorage = sessionStorage.getItem("userConnected");
-        if (userSessionStorage) {
-            // const user = JSON.parse(userSessionStorage);
-            // Crea un usuario en la base de datos
-            // createUsuario(inputValues);
-            // const usuariosBySedeAutoescuelaId = getUsuariosBySedeAutoescuelaId(
-            //     user.sede_autoescuela_id
-            // );
-            // Actualiza el estado global de los usuarios
-            // setUsers(usuariosBySedeAutoescuelaId);
 
-            // setInputValues({
-            //     sede_autoescuela_id: userConnected?.sede_autoescuela_id || "",
-            //     rol_id: "",
-            //     usuario_dni: "",
-            //     usuario_nombre: "",
-            //     usuario_email: "",
-            //     usuario_telefono: "",
-            //     usuario_contrasenya: "",
-            // });
-            console.log("Limpiando formulario");
-            // Mostrar mensaje de creado correctamente
-            // setStatusUserRegistrationForm("accept");
+        console.log(inputValues);
+        const userSession = getUserConnected();
+        editUsuario(inputValues);
+        const usuariosBySedeAutoescuelaId = getUsuariosBySedeAutoescuelaId(userSession.sede_autoescuela_id);
+        setUsers(usuariosBySedeAutoescuelaId);
+        setStatusUserEditFormPopup("accept");
 
-            // setTimeout(() => {
-            //     setStatusUserRegistrationForm("none");
-            // }, 2000);
-        }
-    };
+        setTimeout(() => {
+            setStatusUserEditFormPopup("none");
+        }, 2000);
+    }
 
     return (
         <>
-            {/* <div
+            <div
                 className={clsx("fade-in-out-down text-center", {
-                    "flex justify-center items-center": statusUserRegistrationPopup === "accept",
-                    "hidden": statusUserRegistrationPopup === "none",
+                    "flex justify-center items-center": statusUserEditPopup === "accept",
+                    "hidden": statusUserEditPopup === "none",
                 })}
             >
-                Usuario creado correctamente
-            </div> */}
+                Usuario actualizado con éxito
+            </div>
             <form onSubmit={handleSubmit}>
                 <div className="w-[100vw] lg:w-[600px] p-2">
                     <div className="flex flex-col gap-5 bg-primary-light p-5 rounded h-full">

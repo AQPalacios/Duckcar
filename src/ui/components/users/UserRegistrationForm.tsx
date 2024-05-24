@@ -3,7 +3,7 @@ import { Button, Title } from "../common";
 import { CloseIcon } from "../icons";
 import { useUserConnectionStore, useUserRegistrationFormStore } from "@/store";
 import { createUsuario, getUsuariosBySedeAutoescuelaId } from "@/lib/db";
-import { isEmailExist, isRolValid } from "@/utils/validationInputsCreateUser";
+import { isEmailExist, isRolValid, validateDni } from "@/utils/validationInputsCreateUser";
 import { regexDNI, regexNombre, regexTelefono } from "@/utils/regex/regex";
 import { useUserStore } from "@/store/users/UsersStore";
 import clsx from "clsx";
@@ -60,25 +60,29 @@ export const UserRegistrationForm: FC = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         // Verificar DNI
-        if (!regexDNI.test(usuario_dni)) return;
+        if (validateDni(usuario_dni) !== undefined) return;
         console.log("Dni valido");
         // Verificar Nombre
         if (!regexNombre.test(usuario_nombre)) return;
         console.log("Nombre valido");
-        // Verificar Contraseña
-        if (usuario_contrasenya.length <= 4) return;
-        console.log("contraseña valida");
-        // Verificar Email
-        if (isEmailExist(usuario_email) !== undefined) return;
-        console.log("email valido");
         // Verificar Telefono
         if (usuario_telefono) {
             if (!regexTelefono.test(usuario_telefono)) return;
         }
         console.log("Telefono valido");
+        
+        // Verificar Contraseña
+        if (usuario_contrasenya.length <= 4) return;
+        console.log("contraseña valida");
+
+        // Verificar Email
+        if (isEmailExist(usuario_email) !== undefined) return;
+        console.log("email valido");
+
         // Verficiar rol
         if (!isRolValid(rol_id)) return;
         console.log("rol valido");
+
         const userSessionStorage = sessionStorage.getItem("userConnected");
         if (userSessionStorage) {
             const user = JSON.parse(userSessionStorage);

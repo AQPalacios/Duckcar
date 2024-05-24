@@ -26,7 +26,7 @@ export default function UsersPage() {
             )}
             {isUserEditForm && (
                 <Popup>
-                    <UserEditForm />
+                    <UserEditForm/>
                 </Popup>
             )}
         </div>

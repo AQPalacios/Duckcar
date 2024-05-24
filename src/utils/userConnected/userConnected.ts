@@ -1,6 +1,8 @@
+
 export const getUserConnected = () => {
     const userConnected = sessionStorage.getItem("userConnected");
     if(userConnected){
-        return JSON.parse(userConnected);
+        const user = JSON.parse(userConnected);
+        return user;
     }
 }

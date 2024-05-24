@@ -304,6 +304,47 @@ export const createUsuario = ({
     console.log("No se pudo crear el usuario");
 };
 
+export const editUsuario = ({
+    usuario_id,
+    sede_autoescuela_id,
+    rol_id,
+    usuario_dni,
+    usuario_nombre,
+    usuario_email,
+    usuario_telefono,
+    usuario_contrasenya,
+}: Usuario) => {
+    const storedUsuario = isUsuarioExist();
+    if(!storedUsuario) return;
+    const usuarios: Usuario[] = JSON.parse(storedUsuario);
+    const usuariosWithoutEditUser = usuarios.filter((u) => u.usuario_id !== usuario_id);
+    const usuariosWithEditUser = [...usuariosWithoutEditUser, {
+        usuario_id,
+        sede_autoescuela_id,
+        rol_id,
+        usuario_dni,
+        usuario_nombre,
+        usuario_email,
+        usuario_telefono,
+        usuario_contrasenya,
+    }]
+    localStorage.setItem("usuario", JSON.stringify(usuariosWithEditUser));
+    console.log("Usuario actualizado con exito");
+}
+
+
+export const deleteUsuarioById = (usuarioId: string) => {
+    const storedUsuario = isUsuarioExist();
+    if (storedUsuario) {
+        const usuarios = JSON.parse(storedUsuario);
+        const nuevosUsuarios = usuarios.filter(
+            (u: Usuario) => u.usuario_id !== usuarioId
+        );
+        localStorage.setItem("usuario", JSON.stringify(nuevosUsuarios));
+    }
+};
+
+
 // Obtiene todos los usuarios de todas las autoescuelas
 export const getUsuarios = () => {
     const storedUsuario = isUsuarioExist();
@@ -353,15 +394,4 @@ export const getUsuariobyEmailAndPassword = (inputValues: InputValues) => {
     }
     console.log("El usuario no existe");
     return undefined;
-};
-
-export const deleteUsuarioById = (usuarioId: string) => {
-    const storedUsuario = isUsuarioExist();
-    if (storedUsuario) {
-        const usuarios = JSON.parse(storedUsuario);
-        const nuevosUsuarios = usuarios.filter(
-            (u: Usuario) => u.usuario_id !== usuarioId
-        );
-        localStorage.setItem("usuario", JSON.stringify(nuevosUsuarios));
-    }
 };
