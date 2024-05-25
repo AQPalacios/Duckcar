@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { SearchIcon } from "../icons";
 import { useUserStore } from "@/store/users/UsersStore";
 import { getUserConnected } from "@/utils/userConnected/userConnected";
@@ -38,8 +38,6 @@ export const SearchInput: FC = () => {
             }
         }
     };
-    
-    
 
     const handleChange = (event: any) => {
         event.preventDefault();
