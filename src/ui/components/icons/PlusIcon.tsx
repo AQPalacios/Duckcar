@@ -1,13 +1,16 @@
 import { FC } from "react";
-
-export const PlusIcon: FC = () => {
+interface PlusIconProps{
+    width?: string,
+    height?: string
+}
+export const PlusIcon: FC<PlusIconProps> = ({width = "25", height = "25"}) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             id="Bold"
             viewBox="0 0 24 24"
-            width="25"
-            height="25"
+            width={width}
+            height={height}
         >
             <path
                 fill="white"

@@ -17,6 +17,8 @@ const config: Config = {
             "denied": "var(--denied)",
             "accept": "var(--accept)",
             "white": "var(--white",
+            "third": "var(--third)",
+            "third-light": "var(--third-light)",
         },
         extend: {
             backgroundImage: {

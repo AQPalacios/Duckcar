@@ -23,7 +23,7 @@ export const ActionBar: FC = () => {
                 </Button>
             </div>
             <SearchInput />
-            <Button onClick={openUserRegistrationForm}>
+            <Button onClick={openUserRegistrationForm} className="bg-third hover:bg-third-light">
                 <PlusIcon />
             </Button>
         </div>
