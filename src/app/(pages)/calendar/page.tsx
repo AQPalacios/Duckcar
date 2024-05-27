@@ -1,6 +1,6 @@
 "use client";
 // src/pages/CalendarPage.tsx
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Calendar, dayjsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import dayjs from "dayjs";
@@ -11,8 +11,7 @@ import { EventForm } from "@/ui/components/calendar/EventForm";
 import { useEventFormStore } from "@/store/calendar/EventFormStore";
 import Popup from "@/ui/components/common/Popup";
 import { useEventStore } from "@/store/calendar/EventStore";
-import { getEventosByAutoescuelaId } from "@/lib/db/evento";
-import { getUserConnected } from "@/utils/userConnected/userConnected";
+
 interface Evento {
     evento_id?: string,
     usuario_id?: string,
@@ -43,7 +42,6 @@ const events = [
 ];
 
 const CalendarPage: React.FC = () => {
-    const userConnected = getUserConnected();
     const {events: eventos, setEvents} = useEventStore((state) => state);
 
     const { isEventForm, openEventForm } = useEventFormStore((state) => state);

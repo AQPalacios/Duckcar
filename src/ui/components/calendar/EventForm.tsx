@@ -1,10 +1,9 @@
 "use client";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Button, Title } from "../common";
 import { CloseIcon } from "../icons";
 import { useEventFormStore } from "@/store/calendar/EventFormStore";
 import dayjs from "dayjs";
-import { getUserConnected } from "@/utils/userConnected/userConnected";
 import { createEvento, getEventosByAutoescuelaId } from "@/lib/db/evento";
 import { useEventStore } from "@/store/calendar/EventStore";
 
@@ -21,7 +20,6 @@ interface Usuario {
 
 export const EventForm: FC = () => {
     const { setEvents } = useEventStore((state) => state);
-    const userConnected: Usuario = getUserConnected();
     const { closeEventForm } = useEventFormStore((state) => state);
     const [inputValues, setInputValues] = useState({
         title: "",
@@ -53,6 +51,9 @@ export const EventForm: FC = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        const userSessionStorage = sessionStorage.getItem("userConnected");
+        if(!userSessionStorage) return;
+        const userConnected = JSON.parse(userSessionStorage);
         createEvento({
             usuario_id: userConnected.usuario_id,
             sede_autoescuela_id: userConnected.sede_autoescuela_id,

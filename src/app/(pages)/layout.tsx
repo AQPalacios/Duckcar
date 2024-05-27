@@ -5,7 +5,6 @@ import { useUserConnectionStore } from "@/store";
 import { useEventStore } from "@/store/calendar/EventStore";
 import { useUserStore } from "@/store/users/UsersStore";
 import { Sidebar } from "@/ui/components/sidebar/Sidebar";
-import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
