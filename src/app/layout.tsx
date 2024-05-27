@@ -9,6 +9,7 @@ import {
     initSedeAutoescuelas,
     initUsuario,
 } from "@/lib/db";
+import { initEvento } from "@/lib/db/evento";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         initRol();
         initSedeAutoescuelas();
         initUsuario();
+        initEvento();
         console.log("Base de datos iniciada");
     }, []);
 

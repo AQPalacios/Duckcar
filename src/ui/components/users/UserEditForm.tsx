@@ -26,10 +26,8 @@ interface Usuario {
 export const UserEditForm: FC = () => {
     const {setUsers} = useUserStore((state) => state)
     const {
-        isUserEditForm,
         contentUserEditForm,
         statusUserEditPopup,
-        openUserEditForm,
         closeUserEditForm,
         setStatusUserEditFormPopup
     } = useUserEditFormStore((state) => state);
