@@ -41,8 +41,13 @@ export default function RootLayout({
     }, [router]);
 
     return (
-        <html lang="es">
-            <body className={inter.className}>{children}</body>
-        </html>
+        <>
+            <head>
+                <link rel="icon" href="/favicon.ico" />
+            </head>
+            <html lang="es">
+                <body className={inter.className}>{children}</body>
+            </html>
+        </>
     );
 }

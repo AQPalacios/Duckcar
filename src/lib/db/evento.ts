@@ -59,6 +59,15 @@ export const createEvento = ({
     console.log("Evento guardado en la base de datos");
 }
 
+export const deleteEventoById = (eventoId: string) => {
+    const storedEvento =  isEventoDatabaseExist()
+    if(!storedEvento) return;
+    const eventos = JSON.parse(storedEvento);
+    const newEventos = eventos.filter((e: any) => e.evento_id !== eventoId)
+    console.log(newEventos);
+    localStorage.setItem("evento", JSON.stringify(newEventos));
+}
+
 export const getEventosByAutoescuelaId = (autoescuelaId: string) => {
     const storedEvento =  isEventoDatabaseExist()
     if(!storedEvento) return;
@@ -78,3 +87,4 @@ export const getEventosByAutoescuelaId = (autoescuelaId: string) => {
     console.log(formatearEventos);
     return formatearEventos;
 }
+

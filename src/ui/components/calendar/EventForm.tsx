@@ -107,7 +107,6 @@ export const EventForm: FC = () => {
                             type="datetime-local"
                             className="bg-primary text-white outline-none p-2 rounded focus:bg-input-color hover:bg-input-color"
                             required
-                            min={dayjs().format("YYYY-MM-DDTHH:mm")}
                             name="start"
                             onChange={handleChange}
                             value={start}

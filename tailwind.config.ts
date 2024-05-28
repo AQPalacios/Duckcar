@@ -15,6 +15,7 @@ const config: Config = {
             "input-color":"var(--input-color)",
             "background-popup": "var(--background-popup)",
             "denied": "var(--denied)",
+            "denied-dark": "var(--denied-dark)",
             "accept": "var(--accept)",
             "white": "var(--white",
             "third": "var(--third)",

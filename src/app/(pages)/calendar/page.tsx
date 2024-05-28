@@ -1,21 +1,22 @@
 "use client";
 // src/pages/CalendarPage.tsx
-import React from "react";
+import React, { useState } from "react";
 import { Calendar, dayjsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { Button, Title } from "@/ui/components/common";
-import { PlusIcon } from "@/ui/components/icons";
+import { DeleteIcon, PlusIcon } from "@/ui/components/icons";
 import { EventForm } from "@/ui/components/calendar/EventForm";
 import { useEventFormStore } from "@/store/calendar/EventFormStore";
 import Popup from "@/ui/components/common/Popup";
 import { useEventStore } from "@/store/calendar/EventStore";
+import { deleteEventoById, getEventosByAutoescuelaId } from "@/lib/db/evento";
 
 interface Evento {
-    evento_id?: string,
-    usuario_id?: string,
-    sede_autoescuela_id?: string,
+    evento_id?: string;
+    usuario_id?: string;
+    sede_autoescuela_id?: string;
     title: string;
     start: string; // Cambiado a string para compatibilidad con input
     end: string; // Cambiado a string para compatibilidad con input
@@ -42,9 +43,31 @@ const events = [
 ];
 
 const CalendarPage: React.FC = () => {
-    const {events: eventos, setEvents} = useEventStore((state) => state);
+    const {
+        events: eventos,
+        selectEvent: selectEvento,
+        setEvents,
+        setSelectEvent,
+    } = useEventStore((state) => state);
 
     const { isEventForm, openEventForm } = useEventFormStore((state) => state);
+    const [buttonDelete, setButtonDelete] = useState<boolean>(false);
+
+    const selectEvent = (e: any) => {
+        setSelectEvent(e);
+        setButtonDelete(true);
+    };
+
+    const deleteEvent = () => {
+        const {evento_id} = selectEvento;
+        deleteEventoById(evento_id);
+        const userSession = sessionStorage.getItem("userConnected");
+        if(!userSession) return;
+        const userConnected = JSON.parse(userSession);
+        const eventosBySedeAutoescuelaId = getEventosByAutoescuelaId(userConnected.sede_autoescuela_id);
+        setEvents(eventosBySedeAutoescuelaId);
+        setButtonDelete(false);
+    };
 
     return (
         <>
@@ -58,7 +81,7 @@ const CalendarPage: React.FC = () => {
                 <Calendar
                     className="bg-primary mt-4"
                     localizer={localizer}
-                    onSelectEvent={(e) => console.log(e)}
+                    onSelectEvent={(e) => selectEvent(e)}
                     views={["month", "week", "day"]}
                     events={eventos}
                     startAccessor="start"
@@ -84,6 +107,14 @@ const CalendarPage: React.FC = () => {
                 >
                     <PlusIcon width="40" height="40" />
                 </Button>
+                {buttonDelete && (
+                    <Button
+                        onClick={deleteEvent}
+                        className="absolute flex justify-center items-center bg-[#ec6666] -bottom-5 z-10 -left-5 rounded-full w-[80px] h-[80px] hover:bg-denied-dark"
+                    >
+                        <DeleteIcon width="40" height="40" />
+                    </Button>
+                )}
             </div>
         </>
     );
