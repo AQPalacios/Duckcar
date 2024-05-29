@@ -39,16 +39,6 @@ export const initUsuario = (): void => {
         "usuario",
         JSON.stringify([
             {
-                usuario_id: "superadmin",
-                sede_autoescuela_id: "superadmin",
-                rol_id: "superadmin",
-                usuario_dni: "superadmin",
-                usuario_nombre: "superadmin",
-                usuario_email: "superadmin@superadmin.com",
-                usuario_telefono: "superadmin",
-                usuario_contrasenya: "superadmin",
-            },
-            {
                 usuario_id: createUniqueIdUsuario(13),
                 sede_autoescuela_id: sedeAutoescuelas[0].sede_autoescuela_id,
                 rol_id: "admin",
